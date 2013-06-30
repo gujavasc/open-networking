@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.gujavasc.opennetworking</groupId>
    <artifactId>open-networking</artifactId>
@@ -22,7 +21,14 @@
          <name>Rodolfo Faquin Della Justina</name>
       </developer>
    </developers>
-
+   <scm>
+      <connection>scm:git:git://github.com/gujavasc/open-networking.git</connection>
+      <developerConnection>scm:git:git@github.com:gujavasc/open-networking.git</developerConnection>
+      <url>http://github.com/gujavasc/open-networking</url>
+   </scm>
+   <properties>
+      <picketlink.version>2.5.0.Beta5</picketlink.version>
+   </properties>
    <dependencyManagement>
       <dependencies>
          <dependency>
@@ -32,24 +38,41 @@
             <type>pom</type>
             <scope>import</scope>
          </dependency>
+         <dependency>
+            <groupId>org.picketlink</groupId>
+            <artifactId>picketlink-api</artifactId>
+            <version>${picketlink.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.picketlink</groupId>
+            <artifactId>picketlink-impl</artifactId>
+            <version>${picketlink.version}</version>
+         </dependency>
       </dependencies>
    </dependencyManagement>
-
    <dependencies>
       <dependency>
          <groupId>org.hibernate.javax.persistence</groupId>
          <artifactId>hibernate-jpa-2.0-api</artifactId>
          <scope>provided</scope>
       </dependency>
+      <dependency>
+         <groupId>org.picketlink</groupId>
+         <artifactId>picketlink-api</artifactId>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.picketlink</groupId>
+         <artifactId>picketlink-impl</artifactId>
+         <scope>runtime</scope>
+      </dependency>
    </dependencies>
-
    <repositories>
       <repository>
          <id>JBOSS_NEXUS</id>
          <url>http://repository.jboss.org/nexus/content/groups/public</url>
       </repository>
    </repositories>
-
    <build>
       <finalName>open-networking</finalName>
       <plugins>
@@ -71,12 +94,4 @@
          </plugin>
       </plugins>
    </build>
-
-   <scm>
-      <connection>scm:git:git://github.com/gujavasc/open-networking.git</connection>
-      <developerConnection>scm:git:git@github.com:gujavasc/open-networking.git</developerConnection>
-      <url>http://github.com/gujavasc/open-networking</url>
-      <tag>HEAD</tag>
-   </scm>
-
 </project>
