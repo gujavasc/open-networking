@@ -20,7 +20,8 @@
                 This is you: <h:graphicImage
 					value="#{serviceHub.myProfile.profileImageUrl}" />
 				<br />
-				<h:dataTable value="#{socialUserBean.profileFull.skills}" var="skill" rendered="false">
+				<h:dataTable value="#{socialUserBean.profileFull.skills}"
+					var="skill" rendered="false">
 					<h:column>
 						<f:facet name="header">Skills</f:facet>
 						<h:outputText value="#{skill}" />
@@ -33,8 +34,10 @@
 			</h:panelGroup>
 			<br />
 			<h:outputLink value="#{serviceHub.service.authorizationUrl}"
-				rendered="#{!serviceHub.connected}" title="Click here to login using your LinkedIn account">
-				<h:graphicImage id="serviceIcon" library="gfx" name="js-signin.png" styleClass="tooltip-bottom" title="LinkedIn" />
+				rendered="#{!serviceHub.connected}"
+				title="Click here to login using your LinkedIn account">
+				<h:graphicImage id="serviceIcon" library="gfx" name="js-signin.png"
+					styleClass="tooltip-bottom" title="LinkedIn" />
 			</h:outputLink>
 		</h:form>
 	</ui:define>

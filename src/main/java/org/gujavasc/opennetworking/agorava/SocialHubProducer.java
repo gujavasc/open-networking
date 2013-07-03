@@ -16,7 +16,8 @@ import org.agorava.core.oauth.SimpleOAuthAppSettingsBuilder;
 public class SocialHubProducer {
 
 	@LinkedIn
-	@OAuthApplication(builder = SimpleOAuthAppSettingsBuilder.class, params = { @Param(name = SimpleOAuthAppSettingsBuilder.API_KEY, value = "bnv8x51yjbdo"),
+	@OAuthApplication(builder = SimpleOAuthAppSettingsBuilder.class, params = { 
+	      @Param(name = SimpleOAuthAppSettingsBuilder.API_KEY, value = "bnv8x51yjbdo"),
 			@Param(name = SimpleOAuthAppSettingsBuilder.API_SECRET, value = "y0nvGzOYjw1KyKdV"),
 			@Param(name = SimpleOAuthAppSettingsBuilder.CALLBACK, value = "/faces/callback.xhtml") })
 	@Produces
