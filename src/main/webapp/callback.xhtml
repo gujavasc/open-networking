@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:metadata>
+	<f:viewParam name="#{serviceHub.verifierParamName}"
+		value="#{serviceHub.service.verifier}" required="true"
+		requiredMessage="We didn't get the authorization from #{serviceHub.socialMediaName}. Please go back and Try Again !" />
+	<f:event type="preRenderView"
+		listener="#{serviceHub.service.initAccessToken()}" />
+</f:metadata>
+<h:body>
+	<h:messages />
+	<p>Getting Authorization from #{serviceHub.socialMediaName}</p>
+    You're ready to use
+   <h:commandLink action="index">Open-Networking</h:commandLink>
+</h:body>
+</html>
