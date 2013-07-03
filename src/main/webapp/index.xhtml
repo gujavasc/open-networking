@@ -9,19 +9,18 @@
 	<ui:param name="pageTitle" value="Welcome to Open-Networking" />
 
 	<ui:define name="header">
-		Welcome to Forge
+		Welcome to Open-Networking
 	</ui:define>
 
 	<ui:define name="main">
 		<h:messages />
-		<h1>Agorava client Example</h1>
 		<h:form id="form">
 			<h:panelGroup id="userInfo" rendered="#{serviceHub.connected}">
                 Welcome #{serviceHub.myProfile.fullName}<br />
                 This is you: <h:graphicImage
 					value="#{serviceHub.myProfile.profileImageUrl}" />
 				<br />
-				<h:dataTable value="#{socialUserBean.profileFull.skills}" var="skill">
+				<h:dataTable value="#{socialUserBean.profileFull.skills}" var="skill" rendered="false">
 					<h:column>
 						<f:facet name="header">Skills</f:facet>
 						<h:outputText value="#{skill}" />

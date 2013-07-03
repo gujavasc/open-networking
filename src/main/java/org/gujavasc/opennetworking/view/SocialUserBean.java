@@ -13,7 +13,7 @@ import org.agorava.core.api.SocialMediaApiHub;
 import org.agorava.core.api.event.OAuthComplete;
 import org.agorava.core.api.event.SocialEvent.Status;
 import org.agorava.linkedin.ProfileService;
-import org.agorava.linkedin.model.LinkedInProfileFull;
+import org.agorava.linkedin.model.LinkedInProfile;
 
 @Named
 @SessionScoped
@@ -25,7 +25,7 @@ public class SocialUserBean implements Serializable {
 	@LinkedIn
 	private SocialMediaApiHub serviceHub;
 
-	private LinkedInProfileFull profileFull;
+	private LinkedInProfile profileFull;
 
 	private @Named
 	@Produces
@@ -36,11 +36,11 @@ public class SocialUserBean implements Serializable {
 
 	public void observeLoginOutcome(@Observes OAuthComplete complete, ProfileService profileService) {
 		if (complete.getStatus() == Status.SUCCESS) {
-			this.profileFull = profileService.getUserProfileFull();
+			this.profileFull = profileService.getUserProfile();
 		}
 	}
 
-	public LinkedInProfileFull getProfileFull() {
+	public LinkedInProfile getProfileFull() {
 		return profileFull;
 	}
 

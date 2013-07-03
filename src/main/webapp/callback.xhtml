@@ -9,10 +9,13 @@
 	<f:event type="preRenderView"
 		listener="#{serviceHub.service.initAccessToken()}" />
 </f:metadata>
+<h:head>
+	<meta http-equiv="refresh" content="1;url=#{facesContext.externalContext.requestContextPath}"/>
+</h:head>
 <h:body>
 	<h:messages />
 	<p>Getting Authorization from #{serviceHub.socialMediaName}</p>
-    You're ready to use
-   <h:commandLink action="index">Open-Networking</h:commandLink>
+    You're ready to use. Redirecting to the main page.
+   <h:outputLink value="#{facesContext.externalContext.requestContextPath}">Click here if redirect does not work</h:outputLink>
 </h:body>
 </html>
