@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-core-impl-cdi</artifactId>
-			<scope>runtime</scope>
+		<!--	<scope>runtime</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.agorava</groupId>
@@ -121,7 +121,7 @@
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-linkedin-cdi</artifactId>
-			<scope>runtime</scope>
+		<!--	<scope>runtime</scope> -->
 		</dependency>
 
 		<dependency>
