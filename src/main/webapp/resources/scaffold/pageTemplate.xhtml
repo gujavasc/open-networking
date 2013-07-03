@@ -16,8 +16,13 @@
 			<div class="container">
 				<h:link id="brandLink" outcome="/index.xhtml" styleClass="brand">Open-networking</h:link>
 				<div class="nav-collapse collapse">
+					<div class="pull-right">
+						<ui:include src="/userinfo.xhtml" />
+					</div>
 					<ul class="nav">
-						<li><a href="http://forge.jboss.org/docs/important_plugins/ui-scaffolding.html">How to Customize</a></li>
+						<li><a
+							href="http://forge.jboss.org/docs/important_plugins/ui-scaffolding.html">How
+								to Customize</a></li>
 					</ul>
 				</div>
 			</div>
@@ -27,12 +32,11 @@
 	<div class="container forgecontainer">
 		<div id="navigation">
 			<h:link id="homeLink" outcome="/index.xhtml">
-				<img src="#{resource['forge-logo.png']}" alt="Forge... get hammered" border="0" />
+				<img src="#{resource['forge-logo.png']}" alt="Forge... get hammered"
+					border="0" />
 			</h:link>
 			<ul>
-				<li>
-					<h:link outcome="/user/search" value="User"/>
-				</li>
+				<li><h:link outcome="/user/search" value="User" /></li>
 			</ul>
 		</div>
 
@@ -50,8 +54,10 @@
 
 	<footer>
 		<div id="footer-wrapper">
-	    	<p>Powered by <a href="http://jboss.org/forge">Forge</a></p>
-	    </div>
+			<p>
+				Powered by <a href="http://jboss.org/forge">Forge</a>
+			</p>
+		</div>
 	</footer>
 
 </h:body>
