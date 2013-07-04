@@ -2,12 +2,14 @@
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gujavasc.opennetworking</groupId>
 	<artifactId>open-networking</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Open Networking :: WAR</name>
+
 	<developers>
 		<developer>
 			<id>ricardo</id>
@@ -22,16 +24,19 @@
 			<name>Rodolfo Faquin Della Justina</name>
 		</developer>
 	</developers>
+
 	<scm>
 		<connection>scm:git:git://github.com/gujavasc/open-networking.git</connection>
 		<developerConnection>scm:git:git@github.com:gujavasc/open-networking.git</developerConnection>
 		<url>http://github.com/gujavasc/open-networking</url>
 	</scm>
+
 	<properties>
 		<version.agorava.core>0.5.2</version.agorava.core>
 		<version.agorava.modules>0.5.0</version.agorava.modules>
 		<version.picketlink>2.5.0.Beta5</version.picketlink>
 	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -78,6 +83,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -111,7 +117,7 @@
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-core-impl-cdi</artifactId>
-		<!--	<scope>runtime</scope> -->
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.agorava</groupId>
@@ -121,7 +127,7 @@
 		<dependency>
 			<groupId>org.agorava</groupId>
 			<artifactId>agorava-linkedin-cdi</artifactId>
-		<!--	<scope>runtime</scope> -->
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 
 		<dependency>
@@ -145,12 +151,14 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	
 	<repositories>
 		<repository>
 			<id>JBOSS_NEXUS</id>
 			<url>http://repository.jboss.org/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
+	
 	<build>
 		<finalName>open-networking</finalName>
 		<plugins>
