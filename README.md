@@ -1,4 +1,4 @@
-open-networking
+Open-Networking Project
 ===============
 
 Projeto open-source para criação de uma ferramenta de networking.
