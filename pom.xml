@@ -36,8 +36,8 @@
 	<properties>
 	    <version.junit>4.11</version.junit>
 		<version.arquillian_core>1.1.0.Final</version.arquillian_core>
-		<version.agorava.core>0.5.2</version.agorava.core>
-		<version.agorava.modules>0.5.0</version.agorava.modules>
+		<version.agorava.core>0.6.0</version.agorava.core>
+		<version.agorava.modules>0.6.0</version.agorava.modules>
 		<version.picketlink>2.5.0.Beta5</version.picketlink>
 	</properties>
 
@@ -186,14 +186,14 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>2.4</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>

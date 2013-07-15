@@ -4,15 +4,14 @@ import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.agorava.LinkedIn;
-import org.agorava.core.api.SocialMediaApiHub;
 import org.agorava.core.api.UserProfile;
 import org.agorava.core.api.event.OAuthComplete;
 import org.agorava.core.api.event.SocialEvent.Status;
+import org.agorava.core.api.oauth.OAuthService;
 
 @Named
 @SessionScoped
@@ -23,17 +22,9 @@ public class SocialUserBean implements Serializable
 
    @Inject
    @LinkedIn
-   private SocialMediaApiHub serviceHub;
+   OAuthService service;
 
    private UserProfile profileFull;
-
-   @Named
-   @Produces
-   @SessionScoped
-   private SocialMediaApiHub getServiceHub()
-   {
-      return serviceHub;
-   }
 
    public void observeLoginOutcome(@Observes OAuthComplete complete)
    {
@@ -46,6 +37,17 @@ public class SocialUserBean implements Serializable
    public UserProfile getProfileFull()
    {
       return profileFull;
+   }
+
+   public OAuthService getService()
+   {
+      return service;
+   }
+
+   public void logout()
+   {
+      service.getSession().setAccessToken(null);
+      profileFull = null;
    }
 
 }

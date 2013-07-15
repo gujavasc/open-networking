@@ -15,10 +15,10 @@
 	<ui:define name="main">
 		<h:messages />
 		<h:form id="form">
-			<h:panelGroup id="userInfo" rendered="#{serviceHub.connected}">
-                Welcome #{serviceHub.myProfile.fullName}<br />
+			<h:panelGroup id="userInfo" rendered="#{socialUserBean.service.connected}">
+                Welcome #{socialUserBean.profileFull.fullName}<br />
                 This is you: <h:graphicImage
-					value="#{serviceHub.myProfile.profileImageUrl}" />
+					value="#{socialUserBean.profileFull.profileImageUrl}" />
 				<br />
 				<h:dataTable value="#{socialUserBean.profileFull.skills}"
 					var="skill" rendered="false">
@@ -28,13 +28,13 @@
 					</h:column>
 				</h:dataTable>
 				<br />
-				<h:commandLink actionListener="#{serviceHub.resetConnection()}"
+				<h:commandLink actionListener="#{socialUserBean.logout}"
 					value="Close Connection" />
 				<br />
 			</h:panelGroup>
 			<br />
-			<h:outputLink value="#{serviceHub.service.authorizationUrl}"
-				rendered="#{!serviceHub.connected}"
+			<h:outputLink value="#{socialUserBean.service.authorizationUrl}"
+				rendered="#{!socialUserBean.service.connected}"
 				title="Click here to login using your LinkedIn account">
 				<h:graphicImage id="serviceIcon" library="gfx" name="js-signin.png"
 					styleClass="tooltip-bottom" title="LinkedIn" />
