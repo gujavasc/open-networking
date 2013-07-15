@@ -8,10 +8,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.agorava.LinkedIn;
-import org.agorava.core.api.UserProfile;
 import org.agorava.core.api.event.OAuthComplete;
 import org.agorava.core.api.event.SocialEvent.Status;
 import org.agorava.core.api.oauth.OAuthService;
+import org.agorava.linkedin.ProfileService;
+import org.agorava.linkedin.model.LinkedInProfileFull;
 
 @Named
 @SessionScoped
@@ -24,17 +25,21 @@ public class SocialUserBean implements Serializable
    @LinkedIn
    OAuthService service;
 
-   private UserProfile profileFull;
+   @Inject
+   private transient ProfileService profileService;
+
+   private LinkedInProfileFull profileFull;
 
    public void observeLoginOutcome(@Observes OAuthComplete complete)
    {
       if (complete.getStatus() == Status.SUCCESS)
       {
-         this.profileFull = complete.getEventData().getUserProfile();
+         // this.profileFull = complete.getEventData().getUserProfile();
+         this.profileFull = profileService.getUserProfileFull();
       }
    }
 
-   public UserProfile getProfileFull()
+   public LinkedInProfileFull getProfileFull()
    {
       return profileFull;
    }

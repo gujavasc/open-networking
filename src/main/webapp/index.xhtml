@@ -21,7 +21,7 @@
 					value="#{socialUserBean.profileFull.profileImageUrl}" />
 				<br />
 				<h:dataTable value="#{socialUserBean.profileFull.skills}"
-					var="skill" rendered="false">
+					var="skill">
 					<h:column>
 						<f:facet name="header">Skills</f:facet>
 						<h:outputText value="#{skill}" />
