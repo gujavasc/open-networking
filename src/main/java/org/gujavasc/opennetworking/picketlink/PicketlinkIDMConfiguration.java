@@ -22,47 +22,42 @@ import org.picketlink.idm.jpa.schema.RelationshipObject;
 import org.picketlink.idm.jpa.schema.RelationshipObjectAttribute;
 
 @ApplicationScoped
-public class PicketlinkIDMConfiguration
-{
-   /**
-    * This method uses the IdentityConfigurationBuilder to create an IdentityConfiguration, which defines how PicketLink
-    * stores identity-related data. In this particular example, a JPAIdentityStore is configured to allow the identity
-    * data to be stored in a relational database using JPA.
-    */
-   public void configure(@Observes IdentityConfigurationEvent event)
-   {
-      IdentityConfigurationBuilder builder = event.getConfig();
-      builder
-               .stores()
-               .jpa()
+public class PicketlinkIDMConfiguration {
+	/**
+	 * This method uses the IdentityConfigurationBuilder to create an IdentityConfiguration, which defines how PicketLink stores identity-related data. In this particular example,
+	 * a JPAIdentityStore is configured to allow the identity data to be stored in a relational database using JPA.
+	 */
+	public void configure(@Observes IdentityConfigurationEvent event) {
+		IdentityConfigurationBuilder builder = event.getConfig();
+		builder.stores().jpa()
 
-               // Specify the entity bean class used to hold user, group and role records
-               .identityClass(IdentityObject.class)
+		// Specify the entity bean class used to hold user, group and role records
+				.identityClass(IdentityObject.class)
 
-               // Specify the entity bean class used to hold credential values
-               .credentialClass(CredentialObject.class)
+				// Specify the entity bean class used to hold credential values
+				.credentialClass(CredentialObject.class)
 
-               // Specify the entity bean class used to hold credential attributes
-               .credentialAttributeClass(CredentialObjectAttribute.class)
+				// Specify the entity bean class used to hold credential attributes
+				.credentialAttributeClass(CredentialObjectAttribute.class)
 
-               // Specify the entity bean class used to hold ad-hoc identity attribute values
-               .attributeClass(IdentityObjectAttribute.class)
+				// Specify the entity bean class used to hold ad-hoc identity attribute values
+				.attributeClass(IdentityObjectAttribute.class)
 
-               // Specify the entity bean class used to define inter-identity relationships
-               .relationshipClass(RelationshipObject.class)
+				// Specify the entity bean class used to define inter-identity relationships
+				.relationshipClass(RelationshipObject.class)
 
-               // Specify the entity bean class used to hold references to the identities that
-               // take part in a relationship
-               .relationshipIdentityClass(RelationshipIdentityObject.class)
+				// Specify the entity bean class used to hold references to the identities that
+				// take part in a relationship
+				.relationshipIdentityClass(RelationshipIdentityObject.class)
 
-               // Specify the entity bean class used to hold relationship attribute values
-               .relationshipAttributeClass(RelationshipObjectAttribute.class)
-               
-               // Specify the entity bean class used to hold partition (i.e. realm and tier) related
-               // data
-               .partitionClass(PartitionObject.class)
-               
-               // Specify that this identity store configuration supports all features
-               .supportAllFeatures();
-   }
+				// Specify the entity bean class used to hold relationship attribute values
+				.relationshipAttributeClass(RelationshipObjectAttribute.class)
+
+				// Specify the entity bean class used to hold partition (i.e. realm and tier) related
+				// data
+				.partitionClass(PartitionObject.class)
+
+				// Specify that this identity store configuration supports all features
+				.supportAllFeatures();
+	}
 }

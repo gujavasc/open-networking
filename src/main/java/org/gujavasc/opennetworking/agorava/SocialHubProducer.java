@@ -17,25 +17,22 @@ import org.agorava.core.oauth.SimpleOAuthAppSettingsBuilder;
  * 
  * @author <a href="mailto:gegastaldi@gmail.com">George Gastaldi</a>
  */
-public class SocialHubProducer
-{
+public class SocialHubProducer {
 
-   @LinkedIn
-   @ApplicationScoped
-   @Produces
-   public OAuthAppSettings produceLinkedInSettings()
-   {
-      OAuthAppSettingsBuilder builder = new SimpleOAuthAppSettingsBuilder();
-      return builder.apiKey("bnv8x51yjbdo").apiSecret("y0nvGzOYjw1KyKdV").callback("faces/callback.xhtml").build();
-   }
+	@LinkedIn
+	@ApplicationScoped
+	@Produces
+	public OAuthAppSettings produceLinkedInSettings() {
+		OAuthAppSettingsBuilder builder = new SimpleOAuthAppSettingsBuilder();
+		return builder.apiKey("bnv8x51yjbdo").apiSecret("y0nvGzOYjw1KyKdV").callback("faces/callback.xhtml").build();
+	}
 
-   @SessionScoped
-   @Produces
-   @LinkedIn
-   @Current
-   public OAuthSession produceOauthSession(@LinkedIn @Default OAuthSession session)
-   {
-      return session;
-   }
+	@SessionScoped
+	@Produces
+	@LinkedIn
+	@Current
+	public OAuthSession produceOauthSession(@LinkedIn @Default OAuthSession session) {
+		return session;
+	}
 
 }

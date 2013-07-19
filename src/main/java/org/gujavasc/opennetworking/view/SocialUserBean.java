@@ -16,43 +16,37 @@ import org.agorava.linkedin.model.LinkedInProfileFull;
 
 @Named
 @SessionScoped
-public class SocialUserBean implements Serializable
-{
+public class SocialUserBean implements Serializable {
 
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   @Inject
-   @LinkedIn
-   OAuthService service;
+	@Inject
+	@LinkedIn
+	OAuthService service;
 
-   @Inject
-   private transient ProfileService profileService;
+	@Inject
+	private transient ProfileService profileService;
 
-   private LinkedInProfileFull profileFull;
+	private LinkedInProfileFull profileFull;
 
-   public void observeLoginOutcome(@Observes OAuthComplete complete)
-   {
-      if (complete.getStatus() == Status.SUCCESS)
-      {
-         // this.profileFull = complete.getEventData().getUserProfile();
-         this.profileFull = profileService.getUserProfileFull();
-      }
-   }
+	public void observeLoginOutcome(@Observes OAuthComplete complete) {
+		if (complete.getStatus() == Status.SUCCESS) {
+			// this.profileFull = complete.getEventData().getUserProfile();
+			this.profileFull = profileService.getUserProfileFull();
+		}
+	}
 
-   public LinkedInProfileFull getProfileFull()
-   {
-      return profileFull;
-   }
+	public LinkedInProfileFull getProfileFull() {
+		return profileFull;
+	}
 
-   public OAuthService getService()
-   {
-      return service;
-   }
+	public OAuthService getService() {
+		return service;
+	}
 
-   public void logout()
-   {
-      service.getSession().setAccessToken(null);
-      profileFull = null;
-   }
+	public void logout() {
+		service.getSession().setAccessToken(null);
+		profileFull = null;
+	}
 
 }

@@ -12,14 +12,13 @@ import org.picketlink.annotations.PicketLink;
  * @author <a href="mailto:ggastald@redhat.com">George Gastaldi</a>
  * 
  */
-public class PicketlinkEntityManagerProducer
-{
-   /**
-    * This {@link EntityManager} is used by Picketlink
-    */
-   @Produces
-   @PicketLink
-   @PersistenceContext(unitName = "forge-default")
-   private EntityManager picketLinkEntityManager;
+public class PicketlinkEntityManagerProducer {
+	/**
+	 * This {@link EntityManager} is used by Picketlink
+	 */
+	@Produces
+	@PicketLink
+	@PersistenceContext(unitName = "forge-default")
+	private EntityManager picketLinkEntityManager;
 
 }

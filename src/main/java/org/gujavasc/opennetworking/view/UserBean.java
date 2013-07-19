@@ -19,138 +19,108 @@ import org.picketlink.idm.query.IdentityQuery;
 /**
  * Backing bean for User entities.
  * <p>
- * This class provides CRUD functionality for all User entities. It focuses purely on Java EE 6 standards (e.g.
- * <tt>&#64;ConversationScoped</tt> for state management, <tt>PersistenceContext</tt> for persistence,
- * <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or custom base class.
+ * This class provides CRUD functionality for all User entities. It focuses purely on Java EE 6 standards (e.g. <tt>&#64;ConversationScoped</tt> for state management,
+ * <tt>PersistenceContext</tt> for persistence, <tt>CriteriaBuilder</tt> for searches) rather than introducing a CRUD framework or custom base class.
  */
-
 @Named
 @Stateful
 @ConversationScoped
-public class UserBean implements Serializable
-{
-   private static final long serialVersionUID = 1L;
+public class UserBean implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
-   @Inject
-   private IdentityManager identityManager;
+	@Inject
+	private IdentityManager identityManager;
 
-   @Inject
-   private Conversation conversation;
+	@Inject
+	private Conversation conversation;
 
-   private String id;
+	private String id;
 
-   private User user;
-   private User example = new SimpleUser();
+	private User user;
+	private User example = new SimpleUser();
 
-   public String create()
-   {
+	public String create() {
+		this.conversation.begin();
+		return "create?faces-redirect=true";
+	}
 
-      this.conversation.begin();
-      return "create?faces-redirect=true";
-   }
+	public void retrieve() {
+		if (FacesContext.getCurrentInstance().isPostback()) {
+			return;
+		}
 
-   public void retrieve()
-   {
+		if (this.conversation.isTransient()) {
+			this.conversation.begin();
+		}
 
-      if (FacesContext.getCurrentInstance().isPostback())
-      {
-         return;
-      }
+		if (this.id == null) {
+			this.user = this.example;
+		} else {
+			this.user = findById(getId());
+		}
+	}
 
-      if (this.conversation.isTransient())
-      {
-         this.conversation.begin();
-      }
+	public User findById(String id) {
+		IdentityQuery<User> query = identityManager.createIdentityQuery(User.class);
+		query.setParameter(User.ID, id);
+		List<User> resultList = query.getResultList();
+		return (resultList.isEmpty()) ? null : resultList.get(0);
+	}
 
-      if (this.id == null)
-      {
-         this.user = this.example;
-      }
-      else
-      {
-         this.user = findById(getId());
-      }
-   }
+	/*
+	 * Support updating and deleting User entities
+	 */
+	public String update() {
+		this.conversation.end();
+		try {
+			if (this.id == null) {
+				identityManager.add(this.user);
+				return "search?faces-redirect=true";
+			} else {
+				identityManager.update(this.user);
+				return "view?faces-redirect=true&id=" + this.user.getId();
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+			return null;
+		}
+	}
 
-   public User findById(String id)
-   {
-      IdentityQuery<User> query = identityManager.createIdentityQuery(User.class);
-      query.setParameter(User.ID, id);
-      List<User> resultList = query.getResultList();
-      return (resultList.isEmpty()) ? null : resultList.get(0);
-   }
+	public String delete() {
+		this.conversation.end();
 
-   /*
-    * Support updating and deleting User entities
-    */
+		try {
+			identityManager.remove(user);
+			return "search?faces-redirect=true";
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+			return null;
+		}
+	}
 
-   public String update()
-   {
-      this.conversation.end();
-      try
-      {
-         if (this.id == null)
-         {
-            identityManager.add(this.user);
-            return "search?faces-redirect=true";
-         }
-         else
-         {
-            identityManager.update(this.user);
-            return "view?faces-redirect=true&id=" + this.user.getId();
-         }
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+	public List<User> getAll() {
+		return identityManager.createIdentityQuery(User.class).getResultList();
+	}
 
-   public String delete()
-   {
-      this.conversation.end();
+	public String getId() {
+		return id;
+	}
 
-      try
-      {
-         identityManager.remove(user);
-         return "search?faces-redirect=true";
-      }
-      catch (Exception e)
-      {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-         return null;
-      }
-   }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-   public List<User> getAll()
-   {
-      return identityManager.createIdentityQuery(User.class).getResultList();
-   }
+	public User getExample() {
+		return example;
+	}
 
-   public String getId()
-   {
-      return id;
-   }
+	public void setExample(User example) {
+		this.example = example;
+	}
 
-   public void setId(String id)
-   {
-      this.id = id;
-   }
-
-   public User getExample()
-   {
-      return example;
-   }
-
-   public void setExample(User example)
-   {
-      this.example = example;
-   }
-
-   public User getUser()
-   {
-      return this.user;
-   }
+	public User getUser() {
+		return this.user;
+	}
 
 }
