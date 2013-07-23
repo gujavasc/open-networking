@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-				xmlns:ui="http://java.sun.com/jsf/facelets" 
-				xmlns:f="http://java.sun.com/jsf/core" 
-				xmlns:h="http://java.sun.com/jsf/html"
-				template="/resources/scaffold/pageTemplate.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/resources/scaffold/pageTemplate.xhtml">
 
 	<ui:param name="pageTitle" value="Welcome to Open-Networking" />
 
@@ -13,33 +13,29 @@
 
 	<ui:define name="main">
 		<h:messages />
-		
+
 		<h:form id="form">
-			<h:panelGroup id="userInfo" rendered="#{socialUserBean.service.connected}">
-                Welcome #{socialUserBean.profileFull.fullName}<br />
-                This is you: <h:graphicImage value="#{socialUserBean.profileFull.profileImageUrl}" />
-				
+			<h:panelGroup id="userInfo" rendered="#{identity.loggedIn}">
+                Welcome #{identity.agent.profile.fullName}<br />
+                This is you: <h:graphicImage
+					value="#{identity.agent.profile.profileImageUrl}" />
+
 				<br />
-				
-				<h:dataTable value="#{socialUserBean.profileFull.skills}" var="skill">
+
+				<h:dataTable value="#{identity.agent.profile.skills}" var="skill">
 					<h:column>
 						<f:facet name="header">Skills</f:facet>
 						<h:outputText value="#{skill}" />
 					</h:column>
 				</h:dataTable>
-				
+
 				<br />
-				
-				<h:commandLink actionListener="#{socialUserBean.logout}" value="Close Connection" />
-				
+
+				<h:commandLink actionListener="#{identity.logout}"
+					value="Close Connection" />
+
 				<br />
 			</h:panelGroup>
-			
-			<br />
-			
-			<h:outputLink value="#{socialUserBean.service.authorizationUrl}" rendered="#{!socialUserBean.service.connected}" title="Click here to login using your LinkedIn account">
-				<h:graphicImage id="serviceIcon" library="gfx" name="js-signin.png" styleClass="tooltip-bottom" title="LinkedIn" />
-			</h:outputLink>
 		</h:form>
 	</ui:define>
 

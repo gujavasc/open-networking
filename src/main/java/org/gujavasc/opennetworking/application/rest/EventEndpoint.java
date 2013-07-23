@@ -26,7 +26,7 @@ public class EventEndpoint {
 
 	@Inject
 	private Logger logger;
-	
+
 	@Inject
 	private EventRepository eventRepository;
 
@@ -34,9 +34,9 @@ public class EventEndpoint {
 	@Consumes("application/json")
 	public Response create(Event entity) {
 		logger.info("Called 'create' method /resources/events/ [POST]");
-		
+
 		eventRepository.persist(entity);
-		
+
 		return Response.created(UriBuilder.fromResource(EventEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
 	}
 
@@ -46,13 +46,13 @@ public class EventEndpoint {
 		logger.info("Called 'deleteById' method /resources/events/id [DELETE]");
 
 		Event entity = eventRepository.find(Event.class, id);
-	
+
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
-		
+
 		eventRepository.remove(entity);
-		
+
 		return Response.noContent().build();
 	}
 
@@ -61,9 +61,9 @@ public class EventEndpoint {
 	@Produces("application/json")
 	public Response findById(@PathParam("id") Long id) {
 		logger.info("Called 'findById' method /resources/events/id [GET]");
-		
+
 		Event entity = eventRepository.find(Event.class, id);
-		
+
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
@@ -84,11 +84,11 @@ public class EventEndpoint {
 	@Consumes("application/json")
 	public Response update(@PathParam("id") Long id, Event entity) {
 		logger.info("Called 'update' method /resources/events/id [DELETE]");
-		
+
 		entity.setId(id);
-		
+
 		eventRepository.update(entity);
-		
+
 		return Response.noContent().build();
 	}
 }

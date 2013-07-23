@@ -26,30 +26,30 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private Long id = null;
-	
+
 	@Version
 	@Column
 	private int version = 0;
-	
+
 	@Column
 	@Expose
 	private String idSocialProfile;
-	
+
 	@Embedded
 	private UserName name;
-	
+
 	public User() {
 	}
-	
+
 	public User(String idSocialProfile, String firstName, String lastName) {
 		this.idSocialProfile = idSocialProfile;
 		this.name = new UserName(firstName, lastName);
 	}
-	
+
 	public String getIdSocialProfile() {
 		return idSocialProfile;
 	}
-	
+
 	public String getFullName() {
 		return this.name.getFullName();
 	}

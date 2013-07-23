@@ -7,14 +7,14 @@
 				xmlns:h="http://java.sun.com/jsf/html">
 				
 	<h:form id="userInfoForm">
-		<h:outputLink value="#{socialUserBean.service.authorizationUrl}" rendered="#{!socialUserBean.service.connected}" title="Click here to login using your LinkedIn account">
+		<h:commandLink actionListener="#{identity.login}" rendered="#{!identity.loggedIn}" title="Click here to login using your LinkedIn account">
 			<h:graphicImage id="serviceIcon" library="gfx" name="js-signin.png" styleClass="tooltip-bottom" title="LinkedIn" />
-		</h:outputLink>
+		</h:commandLink>
 
-		<h:panelGroup id="userInfo" rendered="#{socialUserBean.service.connected}">
-			<h:graphicImage value="#{socialUserBean.profileFull.profileImageUrl}" width="40" height="40" />&nbsp;
-			<h:outputText value="#{socialUserBean.profileFull.fullName}" />&nbsp;
-			<h:commandButton actionListener="#{socialUserBean.logout}" value="Logoff" />
+		<h:panelGroup id="userInfo" rendered="#{identity.loggedIn}">
+			<h:graphicImage value="#{identity.agent.profile.profileImageUrl}" width="40" height="40" />&nbsp;
+			<h:outputText value="#{identity.agent.profile.fullName}" />&nbsp;
+			<h:commandButton actionListener="#{identity.logout}" value="Logoff" />
 		</h:panelGroup>
 	</h:form>
 	

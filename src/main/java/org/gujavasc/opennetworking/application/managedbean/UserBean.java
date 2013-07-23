@@ -26,7 +26,7 @@ import org.picketlink.idm.query.IdentityQuery;
 @Stateful
 @ConversationScoped
 public class UserBean implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -38,7 +38,7 @@ public class UserBean implements Serializable {
 	private String id;
 
 	private User user;
-	
+
 	private User example = new SimpleUser();
 
 	public String create() {

@@ -40,32 +40,32 @@ import com.google.gson.JsonParser;
 
 @RunWith(Arquillian.class)
 public class EventEndpointTest {
-	
+
 	private static final String EVENT_ENDPOINT_URL = "http://localhost:8080/open-networking/resources/events";
-	
+
 	@Inject
 	private EventEndpoint eventendpoint;
 
 	@Deployment
 	public static WebArchive createDeployment() {
 		return ShrinkWrap.create(WebArchive.class) //
- 						 .addClass(Event.class) //
-						 .addClass(EventEndpoint.class) //
-						 .addClass(EventRepository.class) //
-						 .addClass(Repository.class) //
-						 .addClass(JaxRsActivator.class) //
-						 .addPackage(PeriodEvent.class.getPackage()) //
-					 	 .addPackage(LoggerProducer.class.getPackage()) //
-					 	 .addPackage(IdentityObject.class.getPackage()) //
-						 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml") //
-						 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+				.addClass(Event.class) //
+				.addClass(EventEndpoint.class) //
+				.addClass(EventRepository.class) //
+				.addClass(Repository.class) //
+				.addClass(JaxRsActivator.class) //
+				.addPackage(PeriodEvent.class.getPackage()) //
+				.addPackage(LoggerProducer.class.getPackage()) //
+				.addPackage(IdentityObject.class.getPackage()) //
+				.addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml") //
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
 	@Test
 	@RunAsClient
 	public void list_all_events_by_rest() throws Exception {
 		ClientRequest request = new ClientRequest(EVENT_ENDPOINT_URL);
-		
+
 		request.accept("application/json");
 
 		ClientResponse<String> response = request.get(String.class);
@@ -75,23 +75,23 @@ public class EventEndpointTest {
 		}
 
 		String json = response.getEntity();
-		
+
 		JsonElement jsonElement = new JsonParser().parse(json);
-		
+
 		JsonArray jsonArray = jsonElement.getAsJsonArray();
-		
+
 		Iterator<JsonElement> iterator = jsonArray.iterator();
-		
+
 		List<Event> events = new ArrayList<Event>();
-		
+
 		Gson gson = GsonFactory.createGson();
-		
-		while(iterator.hasNext()) {
+
+		while (iterator.hasNext()) {
 			JsonElement jsonElement_ = (JsonElement) iterator.next();
-			
+
 			events.add(gson.fromJson(jsonElement_, Event.class));
 		}
-		
+
 		Assert.assertNotNull(events);
 	}
 
@@ -102,7 +102,7 @@ public class EventEndpointTest {
 		request.accept("application/json");
 
 		Event event = new Event("GUJavaSC", "Evento de Java em SC", new Date(), new Date());
-		
+
 		request.body("application/json", GsonFactory.createGson().toJson(event));
 
 		ClientResponse<String> response = request.post(String.class);
@@ -139,16 +139,16 @@ public class EventEndpointTest {
 	public void update() {
 		Event event = new Event("GuvavaSC", "Evento de Java em SC", new Date(), new Date());
 		eventendpoint.create(event);
-		
+
 		String newName = "GujavaSC-Update";
 		event.setName(newName);
 		eventendpoint.update(event.getId(), event);
-		
+
 		Response response = eventendpoint.findById(event.getId());
 		event = (Event) response.getEntity();
-		
+
 		assertEquals(newName, event.getName());
-		
+
 		eventendpoint.deleteById(event.getId());
 	}
 

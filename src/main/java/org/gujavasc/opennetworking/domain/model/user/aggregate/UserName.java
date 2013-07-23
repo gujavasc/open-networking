@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 
 @Embeddable
 public class UserName {
-	
+
 	@Column
 	@Expose
 	private String firstName = "";
@@ -15,15 +15,15 @@ public class UserName {
 	@Column
 	@Expose
 	private String lastName = "";
-	
+
 	public UserName() {
 	}
-	
+
 	public UserName(String firstName, String lastName) {
 		if (firstName != null) {
 			this.firstName = firstName;
 		}
-		
+
 		if (lastName != null) {
 			this.lastName = lastName;
 		}
@@ -32,13 +32,13 @@ public class UserName {
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
-	
+
 }

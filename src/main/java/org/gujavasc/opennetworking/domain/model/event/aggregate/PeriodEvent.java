@@ -18,7 +18,7 @@ public class PeriodEvent {
 	@Expose
 	@Temporal(TemporalType.DATE)
 	private Date endDate = new Date();
-	
+
 	public PeriodEvent() {
 	}
 
@@ -31,13 +31,13 @@ public class PeriodEvent {
 			this.endDate = endDate;
 		}
 	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}
-	
+
 	public Date getEndDate() {
 		return endDate;
 	}
-	
+
 }

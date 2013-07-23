@@ -24,7 +24,7 @@ public class SocialHubProducer {
 	@ApplicationScoped
 	public OAuthAppSettings produceLinkedInSettings() {
 		OAuthAppSettingsBuilder builder = new SimpleOAuthAppSettingsBuilder();
-		return builder.apiKey("bnv8x51yjbdo").apiSecret("y0nvGzOYjw1KyKdV").callback("faces/callback.xhtml").build();
+		return builder.apiKey("bnv8x51yjbdo").apiSecret("y0nvGzOYjw1KyKdV").callback("oauth_callback").build();
 	}
 
 	@Produces

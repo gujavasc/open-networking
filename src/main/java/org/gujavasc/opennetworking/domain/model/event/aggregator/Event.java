@@ -29,7 +29,7 @@ public class Event implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private Long id = null;
-	
+
 	@Version
 	@Column
 	private int version = 0;
@@ -68,19 +68,19 @@ public class Event implements Serializable {
 		if (this == that) {
 			return true;
 		}
-		
+
 		if (that == null) {
 			return false;
 		}
-		
+
 		if (getClass() != that.getClass()) {
 			return false;
 		}
-		
+
 		if (id != null) {
 			return id.equals(((Event) that).id);
 		}
-		
+
 		return super.equals(that);
 	}
 
@@ -89,7 +89,7 @@ public class Event implements Serializable {
 		if (id != null) {
 			return id.hashCode();
 		}
-		
+
 		return super.hashCode();
 	}
 
@@ -104,7 +104,7 @@ public class Event implements Serializable {
 	public PeriodEvent getPeriodEvent() {
 		return periodEvent;
 	}
-	
+
 	public void setPeriodEvent(PeriodEvent periodEvent) {
 		this.periodEvent = periodEvent;
 	}
@@ -116,11 +116,11 @@ public class Event implements Serializable {
 	public void setDetail(final String detail) {
 		this.detail = detail;
 	}
-	
+
 	public int getVersion() {
 		return version;
 	}
-	
+
 	public void setVersion(int version) {
 		this.version = version;
 	}
@@ -128,15 +128,15 @@ public class Event implements Serializable {
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
-		
+
 		if (name != null && !name.trim().isEmpty()) {
 			result += "name: " + name;
 		}
-		
+
 		if (detail != null && !detail.trim().isEmpty()) {
 			result += ", detail: " + detail;
 		}
-		
+
 		return result;
 	}
 }

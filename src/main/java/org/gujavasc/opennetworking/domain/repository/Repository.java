@@ -1,6 +1,5 @@
 package org.gujavasc.opennetworking.domain.repository;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,13 +9,12 @@ public class Repository<T> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
-	
-	protected Class<T> typeClass;
 
-	@SuppressWarnings("unchecked")
-	public Repository() {
-    	typeClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
+	protected final Class<T> typeClass;
+
+	public Repository(Class<T> typeClass) {
+		this.typeClass = typeClass;
+	}
 
 	public T find(Class<T> clazz, Long id) {
 		return entityManager.find(clazz, id);
@@ -35,7 +33,7 @@ public class Repository<T> {
 		entity = entityManager.merge(entity);
 		entityManager.remove(entity);
 	}
-	
+
 	public List<T> findAll() {
 		String sql = "FROM " + typeClass.getSimpleName();
 		return entityManager.createQuery(sql, typeClass).getResultList();
