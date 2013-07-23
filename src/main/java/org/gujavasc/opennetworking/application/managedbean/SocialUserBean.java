@@ -31,9 +31,6 @@ public class SocialUserBean implements Serializable {
 	private transient ProfileService profileService;
 	
 	@Inject
-	private transient UserService userService;
-	
-	@Inject
 	private transient UserRepository userRepository;
 
 	private LinkedInProfileFull profileFull;
@@ -43,22 +40,19 @@ public class SocialUserBean implements Serializable {
 	public void observeLoginOutcome(@Observes OAuthComplete complete) {
 		if (complete.getStatus() == Status.SUCCESS) {
 			profileFull = profileService.getUserProfileFull();
-			
-			loadUser();
 		}
 	}
 
-	private void loadUser() {
-		String idUserSocialProfile = profileFull.getId();
-		
-		loggedUser = userService.getByIdSocialProfile(idUserSocialProfile);
-		
-		if (loggedUser != null) {
-			return;
+	public void loadUser(@Observes OAuthComplete complete) {
+		if (complete.getStatus() == Status.SUCCESS) {
+			String idUserSocialProfile = profileFull.getId();
+			
+			loggedUser = userRepository.getByIdSocialProfile(idUserSocialProfile);
+			
+			if (loggedUser == null) {
+				persistNewUser();
+			}
 		}
-		
-		persistNewUser();
-		
 	}
 
 	private void persistNewUser() {
