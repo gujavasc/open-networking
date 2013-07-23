@@ -1,4 +1,4 @@
-package org.gujavasc.opennetworking.view;
+package org.gujavasc.opennetworking.application.managedbean;
 
 import java.io.Serializable;
 

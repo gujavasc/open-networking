@@ -1,44 +1,53 @@
-package org.gujavasc.opennetworking.model;
+package org.gujavasc.opennetworking.domain.aggregator;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import javax.persistence.Id;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
-import java.lang.Override;
-import java.util.Date;
+import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 @XmlRootElement
 public class Event implements Serializable {
 
+	private static final long serialVersionUID = 6380125148649232157L;
+
 	@Id
+	@Expose
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(updatable = false, nullable = false)
 	private Long id = null;
+	
 	@Version
-	@Column(name = "version")
+	@Column
 	private int version = 0;
 
 	@Column
+	@Expose
 	private String name;
 
+	@Expose
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
+	@Expose
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 
 	@Column
+	@Expose
 	private String detail;
 
 	public Event() {
-
 	}
 
 	public Event(String name, String detail, Date startDate, Date endDate) {
@@ -117,14 +126,27 @@ public class Event implements Serializable {
 	public void setDetail(final String detail) {
 		this.detail = detail;
 	}
+	
+	public int getVersion() {
+		return version;
+	}
+	
+	public void setVersion(int version) {
+		this.version = version;
+	}
 
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
-		if (name != null && !name.trim().isEmpty())
+		
+		if (name != null && !name.trim().isEmpty()) {
 			result += "name: " + name;
-		if (detail != null && !detail.trim().isEmpty())
+		}
+		
+		if (detail != null && !detail.trim().isEmpty()) {
 			result += ", detail: " + detail;
+		}
+		
 		return result;
 	}
 }

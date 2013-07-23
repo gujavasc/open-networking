@@ -1,4 +1,4 @@
-package org.gujavasc.opennetworking.agorava;
+package org.gujavasc.opennetworking.application.agorava;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;

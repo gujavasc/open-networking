@@ -5,7 +5,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.gujavasc.opennetworking.picketlink;
+package org.gujavasc.opennetworking.application.picketlink;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;

@@ -5,7 +5,7 @@
 
 	<function>
 		<function-name>asList</function-name>
-		<function-class>org.gujavasc.opennetworking.view.ViewUtils</function-class>
+		<function-class>org.gujavasc.opennetworking.application.managedbean.ViewUtils</function-class>
 		<function-signature>
 			java.util.List asList(java.util.Collection)
 		</function-signature>

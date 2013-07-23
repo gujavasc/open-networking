@@ -1,4 +1,4 @@
-package org.gujavasc.opennetworking.picketlink;
+package org.gujavasc.opennetworking.application.picketlink;
 
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
