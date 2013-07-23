@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,25 +16,26 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import org.gujavasc.opennetworking.domain.aggregator.Event;
+import org.gujavasc.opennetworking.domain.model.event.aggregator.Event;
+import org.gujavasc.opennetworking.domain.repository.EventRepository;
 import org.jboss.logging.Logger;
 
 @Stateless
 @Path("/events")
 public class EventEndpoint {
 
-	@PersistenceContext
-	private EntityManager em;
-	
 	@Inject
 	private Logger logger;
+	
+	@Inject
+	private EventRepository eventRepository;
 
 	@POST
 	@Consumes("application/json")
 	public Response create(Event entity) {
 		logger.info("Called 'create' method /resources/events/ [POST]");
 		
-		em.persist(entity);
+		eventRepository.persist(entity);
 		
 		return Response.created(UriBuilder.fromResource(EventEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
 	}
@@ -46,13 +45,13 @@ public class EventEndpoint {
 	public Response deleteById(@PathParam("id") Long id) {
 		logger.info("Called 'deleteById' method /resources/events/id [DELETE]");
 
-		Event entity = em.find(Event.class, id);
+		Event entity = eventRepository.find(Event.class, id);
 	
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		
-		em.remove(entity);
+		eventRepository.remove(entity);
 		
 		return Response.noContent().build();
 	}
@@ -63,7 +62,7 @@ public class EventEndpoint {
 	public Response findById(@PathParam("id") Long id) {
 		logger.info("Called 'findById' method /resources/events/id [GET]");
 		
-		Event entity = em.find(Event.class, id);
+		Event entity = eventRepository.find(Event.class, id);
 		
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
@@ -77,18 +76,18 @@ public class EventEndpoint {
 	public List<Event> listAll() {
 		logger.info("Called 'listAll' method /resources/events/ [GET]");
 
-		return em.createQuery("FROM Event", Event.class).getResultList();
+		return eventRepository.findAll();
 	}
 
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
 	@Consumes("application/json")
 	public Response update(@PathParam("id") Long id, Event entity) {
-		logger.info("Called 'deleteById' method /resources/events/id [DELETE]");
+		logger.info("Called 'update' method /resources/events/id [DELETE]");
 		
 		entity.setId(id);
 		
-		entity = em.merge(entity);
+		eventRepository.update(entity);
 		
 		return Response.noContent().build();
 	}

@@ -20,17 +20,17 @@ import org.agorava.core.oauth.SimpleOAuthAppSettingsBuilder;
 public class SocialHubProducer {
 
 	@LinkedIn
-	@ApplicationScoped
 	@Produces
+	@ApplicationScoped
 	public OAuthAppSettings produceLinkedInSettings() {
 		OAuthAppSettingsBuilder builder = new SimpleOAuthAppSettingsBuilder();
 		return builder.apiKey("bnv8x51yjbdo").apiSecret("y0nvGzOYjw1KyKdV").callback("faces/callback.xhtml").build();
 	}
 
-	@SessionScoped
 	@Produces
 	@LinkedIn
 	@Current
+	@SessionScoped
 	public OAuthSession produceOauthSession(@LinkedIn @Default OAuthSession session) {
 		return session;
 	}

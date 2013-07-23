@@ -13,6 +13,9 @@ import org.agorava.core.api.event.SocialEvent.Status;
 import org.agorava.core.api.oauth.OAuthService;
 import org.agorava.linkedin.ProfileService;
 import org.agorava.linkedin.model.LinkedInProfileFull;
+import org.gujavasc.opennetworking.domain.model.user.aggregator.User;
+import org.gujavasc.opennetworking.domain.repository.UserRepository;
+import org.gujavasc.opennetworking.domain.service.UserService;
 
 @Named
 @SessionScoped
@@ -26,14 +29,42 @@ public class SocialUserBean implements Serializable {
 
 	@Inject
 	private transient ProfileService profileService;
+	
+	@Inject
+	private transient UserService userService;
+	
+	@Inject
+	private transient UserRepository userRepository;
 
 	private LinkedInProfileFull profileFull;
+	
+	private User loggedUser;
 
 	public void observeLoginOutcome(@Observes OAuthComplete complete) {
 		if (complete.getStatus() == Status.SUCCESS) {
-			// this.profileFull = complete.getEventData().getUserProfile();
-			this.profileFull = profileService.getUserProfileFull();
+			profileFull = profileService.getUserProfileFull();
+			
+			loadUser();
 		}
+	}
+
+	private void loadUser() {
+		String idUserSocialProfile = profileFull.getId();
+		
+		loggedUser = userService.getByIdSocialProfile(idUserSocialProfile);
+		
+		if (loggedUser != null) {
+			return;
+		}
+		
+		persistNewUser();
+		
+	}
+
+	private void persistNewUser() {
+		User newUser = new User(profileFull.getId(), profileFull.getFirstName(), profileFull.getLastName());
+		userRepository.persist(newUser);
+		loggedUser = newUser;
 	}
 
 	public LinkedInProfileFull getProfileFull() {

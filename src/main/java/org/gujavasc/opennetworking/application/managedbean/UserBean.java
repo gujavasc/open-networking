@@ -38,6 +38,7 @@ public class UserBean implements Serializable {
 	private String id;
 
 	private User user;
+	
 	private User example = new SimpleUser();
 
 	public String create() {

@@ -4,14 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.gujavasc.opennetworking.application.rest.EventEndpoint;
 import org.gujavasc.opennetworking.application.rest.JaxRsActivator;
-import org.gujavasc.opennetworking.domain.aggregator.Event;
+import org.gujavasc.opennetworking.domain.model.event.aggregate.PeriodEvent;
+import org.gujavasc.opennetworking.domain.model.event.aggregator.Event;
+import org.gujavasc.opennetworking.domain.repository.EventRepository;
+import org.gujavasc.opennetworking.domain.repository.Repository;
 import org.gujavasc.opennetworking.infra.factory.GsonFactory;
 import org.gujavasc.opennetworking.infrastructure.producer.LoggerProducer;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -27,6 +33,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.picketlink.idm.jpa.schema.IdentityObject;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 @RunWith(Arquillian.class)
 public class EventEndpointTest {
 	
@@ -38,9 +49,12 @@ public class EventEndpointTest {
 	@Deployment
 	public static WebArchive createDeployment() {
 		return ShrinkWrap.create(WebArchive.class) //
+ 						 .addClass(Event.class) //
 						 .addClass(EventEndpoint.class) //
+						 .addClass(EventRepository.class) //
+						 .addClass(Repository.class) //
 						 .addClass(JaxRsActivator.class) //
-						 .addPackage(Event.class.getPackage()) //
+						 .addPackage(PeriodEvent.class.getPackage()) //
 					 	 .addPackage(LoggerProducer.class.getPackage()) //
 					 	 .addPackage(IdentityObject.class.getPackage()) //
 						 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml") //
@@ -51,6 +65,7 @@ public class EventEndpointTest {
 	@RunAsClient
 	public void list_all_events_by_rest() throws Exception {
 		ClientRequest request = new ClientRequest(EVENT_ENDPOINT_URL);
+		
 		request.accept("application/json");
 
 		ClientResponse<String> response = request.get(String.class);
@@ -59,18 +74,25 @@ public class EventEndpointTest {
 			Assert.fail("Code status response: " + response.getStatus());
 		}
 
-//		Type type = new TypeToken<ArrayList<Event>>(){}.getType();
-//		List<Event> events = GsonFactory.createGson().fromJson(response.getEntity(), type);
+		String json = response.getEntity();
 		
-//		Assert.assertNotNull(events);
+		JsonElement jsonElement = new JsonParser().parse(json);
 		
-//		BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response.getEntity().getBytes())));
-//
-//		String output;
-//
-//		while ((output = br.readLine()) != null) {
-//			System.out.println(output);
-//		}
+		JsonArray jsonArray = jsonElement.getAsJsonArray();
+		
+		Iterator<JsonElement> iterator = jsonArray.iterator();
+		
+		List<Event> events = new ArrayList<Event>();
+		
+		Gson gson = GsonFactory.createGson();
+		
+		while(iterator.hasNext()) {
+			JsonElement jsonElement_ = (JsonElement) iterator.next();
+			
+			events.add(gson.fromJson(jsonElement_, Event.class));
+		}
+		
+		Assert.assertNotNull(events);
 	}
 
 	@Test
@@ -79,7 +101,7 @@ public class EventEndpointTest {
 		ClientRequest request = new ClientRequest(EVENT_ENDPOINT_URL);
 		request.accept("application/json");
 
-		Event event = new Event("GuvavaSC", "Evento de Java em SC", new Date(), new Date());
+		Event event = new Event("GUJavaSC", "Evento de Java em SC", new Date(), new Date());
 		
 		request.body("application/json", GsonFactory.createGson().toJson(event));
 
