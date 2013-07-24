@@ -1,40 +1,18 @@
 package org.gujavasc.opennetworking.domain.repository;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManager;
+public interface Repository<TYPE, KEY extends Serializable> {
 
-public abstract class Repository<T> {
+	public abstract TYPE findById(KEY id);
 
-	protected final Class<T> typeClass;
+	public abstract void update(TYPE entity);
 
-	public Repository(Class<T> typeClass) {
-		this.typeClass = typeClass;
-	}
+	public abstract void persist(TYPE entity);
 
-	public T find(Class<T> clazz, Long id) {
-		return getEntityManager().find(clazz, id);
-	}
+	public abstract void remove(TYPE entity);
 
-	public void update(T entity) {
-		entity = getEntityManager().merge(entity);
-		getEntityManager().persist(entity);
-	}
-
-	public void persist(T entity) {
-		getEntityManager().persist(entity);
-	}
-
-	public void remove(T entity) {
-		entity = getEntityManager().merge(entity);
-		getEntityManager().remove(entity);
-	}
-
-	public List<T> findAll() {
-		String sql = "FROM " + typeClass.getSimpleName();
-		return getEntityManager().createQuery(sql, typeClass).getResultList();
-	}
-	
-	protected abstract EntityManager getEntityManager();
+	public abstract List<TYPE> findAll();
 
 }

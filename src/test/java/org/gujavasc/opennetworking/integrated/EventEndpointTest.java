@@ -16,7 +16,7 @@ import org.gujavasc.opennetworking.application.rest.EventEndpoint;
 import org.gujavasc.opennetworking.application.rest.JaxRsActivator;
 import org.gujavasc.opennetworking.domain.model.Event;
 import org.gujavasc.opennetworking.domain.repository.EventRepository;
-import org.gujavasc.opennetworking.domain.repository.Repository;
+import org.gujavasc.opennetworking.domain.repository.AbstractJPARepository;
 import org.gujavasc.opennetworking.infra.factory.GsonFactory;
 import org.gujavasc.opennetworking.infrastructure.producer.LoggerProducer;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -51,7 +51,7 @@ public class EventEndpointTest {
 				.addClass(Event.class) //
 				.addClass(EventEndpoint.class) //
 				.addClass(EventRepository.class) //
-				.addClass(Repository.class) //
+				.addClass(AbstractJPARepository.class) //
 				.addClass(JaxRsActivator.class) //
 				.addPackage(LoggerProducer.class.getPackage()) //
 				.addPackage(IdentityObject.class.getPackage()) //

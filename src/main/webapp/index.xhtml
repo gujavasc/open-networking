@@ -16,19 +16,7 @@
 
 		<h:form id="form">
 			<h:panelGroup id="userInfo" rendered="#{identity.loggedIn}">
-                Welcome #{identity.agent.profile.fullName}<br />
-                This is you: <h:graphicImage
-					value="#{identity.agent.profile.profileImageUrl}" />
-
-				<br />
-
-				<h:dataTable value="#{identity.agent.profile.skills}" var="skill">
-					<h:column>
-						<f:facet name="header">Skills</f:facet>
-						<h:outputText value="#{skill}" />
-					</h:column>
-				</h:dataTable>
-
+                Bem Vindo #{identity.agent.firstName}<br />
 				<br />
 
 				<h:commandLink actionListener="#{identity.logout}"

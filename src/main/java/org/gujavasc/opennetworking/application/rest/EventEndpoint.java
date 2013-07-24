@@ -1,6 +1,7 @@
 package org.gujavasc.opennetworking.application.rest;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,7 +19,6 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.gujavasc.opennetworking.domain.model.Event;
 import org.gujavasc.opennetworking.domain.repository.EventRepository;
-import org.jboss.logging.Logger;
 
 @Stateless
 @Path("/events")
@@ -45,7 +45,7 @@ public class EventEndpoint {
 	public Response deleteById(@PathParam("id") Long id) {
 		logger.info("Called 'deleteById' method /resources/events/id [DELETE]");
 
-		Event entity = eventRepository.find(Event.class, id);
+		Event entity = eventRepository.findById(id);
 
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
@@ -62,7 +62,7 @@ public class EventEndpoint {
 	public Response findById(@PathParam("id") Long id) {
 		logger.info("Called 'findById' method /resources/events/id [GET]");
 
-		Event entity = eventRepository.find(Event.class, id);
+		Event entity = eventRepository.findById(id);
 
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();

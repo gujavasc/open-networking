@@ -1,9 +1,9 @@
 package org.gujavasc.opennetworking.infrastructure.producer;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.jboss.logging.Logger;
 
 public class LoggerProducer {
 

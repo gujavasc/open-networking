@@ -8,8 +8,9 @@
 package org.gujavasc.opennetworking.application.picketlink;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.EJB;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
@@ -20,14 +21,17 @@ import org.agorava.core.api.oauth.OAuthService;
 import org.agorava.core.api.oauth.OAuthSession;
 import org.agorava.linkedin.ProfileService;
 import org.agorava.linkedin.model.LinkedInProfileFull;
+import org.gujavasc.opennetworking.domain.repository.UserRepository;
 import org.picketlink.annotations.PicketLink;
 import org.picketlink.authentication.BaseAuthenticator;
 import org.picketlink.authentication.event.PreLoggedOutEvent;
 import org.picketlink.credential.DefaultLoginCredentials;
 import org.picketlink.idm.credential.Credentials.Status;
+import org.picketlink.idm.model.Attribute;
+import org.picketlink.idm.model.SimpleUser;
+import org.picketlink.idm.model.User;
 
 @PicketLink
-@ApplicationScoped
 public class AgoravaAuthenticator extends BaseAuthenticator {
 
 	@Inject
@@ -38,11 +42,17 @@ public class AgoravaAuthenticator extends BaseAuthenticator {
 	Instance<HttpServletResponse> response;
 
 	@Inject
+	private Logger logger;
+
+	@Inject
 	@LinkedIn
 	OAuthService service;
 
+	@EJB
+	UserRepository userRepository;
+
 	@Inject
-	private transient ProfileService profileService;
+	private ProfileService profileService;
 
 	@Override
 	public void authenticate() {
@@ -50,9 +60,15 @@ public class AgoravaAuthenticator extends BaseAuthenticator {
 			OAuthSession session = service.getSession();
 			credentials.setCredential(session.getAccessToken());
 			setStatus(AuthenticationStatus.SUCCESS);
-
-			LinkedInProfileFull userProfileFull = profileService.getUserProfileFull();
-			LinkedInAgent user = new LinkedInAgent(userProfileFull);
+			String id = session.getUserProfile().getId();
+			User user = userRepository.findById(id);
+			if (user == null) {
+				logger.info(String.format("User '%s' does not exist in DB. Persisting...", id));
+				LinkedInProfileFull userProfileFull = profileService.getUserProfileFull();
+				user = toUser(userProfileFull);
+				userRepository.persist(user);
+			}
+			logger.info(String.format("User '%s' logged in.", id));
 			setAgent(user);
 		} else {
 			String authorizationUrl = service.getAuthorizationUrl();
@@ -66,7 +82,17 @@ public class AgoravaAuthenticator extends BaseAuthenticator {
 		}
 	}
 
-	public void logout(@Observes PreLoggedOutEvent preLoggedOutEvent) {
+	// TODO: Move to another class ?
+	private User toUser(LinkedInProfileFull profile) {
+		SimpleUser simpleUser = new SimpleUser(profile.getId());
+		simpleUser.setFirstName(profile.getFirstName());
+		simpleUser.setLastName(profile.getLastName());
+		simpleUser.setAttribute(new Attribute<String>("image", profile.getProfileImageUrl()));
+		simpleUser.setAttribute(new Attribute<String>("skills", profile.getSkills().toString()));
+		return simpleUser;
+	}
+
+	void logout(@Observes PreLoggedOutEvent preLoggedOutEvent) {
 		service.getSession().setAccessToken(null);
 	}
 }

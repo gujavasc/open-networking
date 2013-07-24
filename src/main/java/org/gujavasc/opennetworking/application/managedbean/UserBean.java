@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.picketlink.Identity;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.model.SimpleUser;
 import org.picketlink.idm.model.User;
@@ -31,6 +32,9 @@ public class UserBean implements Serializable {
 
 	@Inject
 	private IdentityManager identityManager;
+
+	@Inject
+	private Identity identity;
 
 	@Inject
 	private Conversation conversation;
@@ -122,6 +126,14 @@ public class UserBean implements Serializable {
 
 	public User getUser() {
 		return this.user;
+	}
+
+	public String getCurrentUserPicture() {
+		if (identity.isLoggedIn()) {
+			return (String) identity.getAgent().getAttribute("image").getValue();
+		} else {
+			return null;
+		}
 	}
 
 }

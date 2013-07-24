@@ -12,8 +12,8 @@
 		</h:commandLink>
 
 		<h:panelGroup id="userInfo" rendered="#{identity.loggedIn}">
-			<h:graphicImage value="#{identity.agent.profile.profileImageUrl}" width="40" height="40" />&nbsp;
-			<h:outputText value="#{identity.agent.profile.fullName}" />&nbsp;
+			<h:graphicImage value="#{userBean.currentUserPicture}" width="40" height="40" />&nbsp;
+			Olá&nbsp;<h:outputText value="#{identity.agent.firstName} #{identity.agent.lastName}" />&nbsp;
 			<h:commandButton actionListener="#{identity.logout}" value="Logoff" />
 		</h:panelGroup>
 	</h:form>
