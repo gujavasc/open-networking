@@ -1,4 +1,4 @@
-package org.gujavasc.opennetworking.domain.model.user;
+package org.gujavasc.opennetworking.domain.model;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
