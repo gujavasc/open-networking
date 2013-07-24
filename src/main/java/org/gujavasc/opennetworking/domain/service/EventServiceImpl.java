@@ -1,12 +1,8 @@
 package org.gujavasc.opennetworking.domain.service;
 
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 
-import org.gujavasc.opennetworking.domain.repository.EventRepository;
-
+@Stateless
 public class EventServiceImpl implements EventService {
-
-	@Inject
-	private EventRepository eventRepository;
 
 }

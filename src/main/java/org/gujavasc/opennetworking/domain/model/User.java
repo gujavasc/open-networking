@@ -1,17 +1,14 @@
-package org.gujavasc.opennetworking.domain.model.user.aggregator;
+package org.gujavasc.opennetworking.domain.model;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.gujavasc.opennetworking.domain.model.user.aggregate.UserName;
 
 import com.google.gson.annotations.Expose;
 
@@ -35,23 +32,41 @@ public class User implements Serializable {
 	@Expose
 	private String idSocialProfile;
 
-	@Embedded
-	private UserName name;
+	@Column
+	@Expose
+	private String firstName = "";
+
+	@Column
+	@Expose
+	private String lastName = "";
 
 	public User() {
 	}
 
 	public User(String idSocialProfile, String firstName, String lastName) {
 		this.idSocialProfile = idSocialProfile;
-		this.name = new UserName(firstName, lastName);
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public String getIdSocialProfile() {
 		return idSocialProfile;
 	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-	public String getFullName() {
-		return this.name.getFullName();
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

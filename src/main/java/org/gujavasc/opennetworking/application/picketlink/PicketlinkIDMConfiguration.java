@@ -31,7 +31,7 @@ public class PicketlinkIDMConfiguration {
 		IdentityConfigurationBuilder builder = event.getConfig();
 		builder.stores().jpa()
 
-		// Specify the entity bean class used to hold user, group and role records
+				// Specify the entity bean class used to hold user, group and role records
 				.identityClass(IdentityObject.class)
 
 				// Specify the entity bean class used to hold credential values

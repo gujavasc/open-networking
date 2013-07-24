@@ -2,7 +2,7 @@ package org.gujavasc.opennetworking.infra.factory;
 
 import java.util.Date;
 
-import org.gujavasc.opennetworking.domain.model.event.aggregator.Event;
+import org.gujavasc.opennetworking.domain.model.Event;
 import org.gujavasc.opennetworking.infra.converter.DateDeserializer;
 import org.gujavasc.opennetworking.infra.converter.DateSerializer;
 import org.joda.time.DateTime;

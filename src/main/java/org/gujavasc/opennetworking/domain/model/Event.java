@@ -1,20 +1,17 @@
-package org.gujavasc.opennetworking.domain.model.event.aggregator;
+package org.gujavasc.opennetworking.domain.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.gujavasc.opennetworking.domain.model.event.aggregate.PeriodEvent;
 
 import com.google.gson.annotations.Expose;
 
@@ -39,8 +36,12 @@ public class Event implements Serializable {
 	private String name;
 
 	@Expose
-	@Embedded
-	private PeriodEvent periodEvent;
+	@Temporal(TemporalType.DATE)
+	private Date startDate = new Date();
+
+	@Expose
+	@Temporal(TemporalType.DATE)
+	private Date endDate = new Date();
 
 	@Column
 	@Expose
@@ -52,7 +53,8 @@ public class Event implements Serializable {
 	public Event(String name, String detail, Date startDate, Date endDate) {
 		this.name = name;
 		this.detail = detail;
-		this.periodEvent = new PeriodEvent(startDate, endDate);
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	public Long getId() {
@@ -101,12 +103,20 @@ public class Event implements Serializable {
 		this.name = name;
 	}
 
-	public PeriodEvent getPeriodEvent() {
-		return periodEvent;
+	public Date getStartDate() {
+		return startDate;
+	}
+	
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public void setPeriodEvent(PeriodEvent periodEvent) {
-		this.periodEvent = periodEvent;
+	public Date getEndDate() {
+		return endDate;
+	}
+	
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getDetail() {

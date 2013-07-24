@@ -14,8 +14,7 @@ import javax.ws.rs.core.Response;
 
 import org.gujavasc.opennetworking.application.rest.EventEndpoint;
 import org.gujavasc.opennetworking.application.rest.JaxRsActivator;
-import org.gujavasc.opennetworking.domain.model.event.aggregate.PeriodEvent;
-import org.gujavasc.opennetworking.domain.model.event.aggregator.Event;
+import org.gujavasc.opennetworking.domain.model.Event;
 import org.gujavasc.opennetworking.domain.repository.EventRepository;
 import org.gujavasc.opennetworking.domain.repository.Repository;
 import org.gujavasc.opennetworking.infra.factory.GsonFactory;
@@ -54,7 +53,6 @@ public class EventEndpointTest {
 				.addClass(EventRepository.class) //
 				.addClass(Repository.class) //
 				.addClass(JaxRsActivator.class) //
-				.addPackage(PeriodEvent.class.getPackage()) //
 				.addPackage(LoggerProducer.class.getPackage()) //
 				.addPackage(IdentityObject.class.getPackage()) //
 				.addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml") //

@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import org.gujavasc.opennetworking.domain.model.event.aggregator.Event;
+import org.gujavasc.opennetworking.domain.model.Event;
 import org.gujavasc.opennetworking.domain.repository.EventRepository;
 import org.jboss.logging.Logger;
 

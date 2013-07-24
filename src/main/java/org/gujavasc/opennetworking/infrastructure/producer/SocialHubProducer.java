@@ -1,4 +1,4 @@
-package org.gujavasc.opennetworking.application.agorava;
+package org.gujavasc.opennetworking.infrastructure.producer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;

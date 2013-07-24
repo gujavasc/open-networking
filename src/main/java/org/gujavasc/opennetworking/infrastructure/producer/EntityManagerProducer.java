@@ -1,4 +1,4 @@
-package org.gujavasc.opennetworking.application.picketlink;
+package org.gujavasc.opennetworking.infrastructure.producer;
 
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -12,7 +12,8 @@ import org.picketlink.annotations.PicketLink;
  * @author <a href="mailto:ggastald@redhat.com">George Gastaldi</a>
  * 
  */
-public class PicketlinkEntityManagerProducer {
+public class EntityManagerProducer {
+	
 	/**
 	 * This {@link EntityManager} is used by Picketlink
 	 */

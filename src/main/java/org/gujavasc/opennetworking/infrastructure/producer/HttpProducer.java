@@ -5,7 +5,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.gujavasc.opennetworking.application.picketlink;
+package org.gujavasc.opennetworking.infrastructure.producer;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;

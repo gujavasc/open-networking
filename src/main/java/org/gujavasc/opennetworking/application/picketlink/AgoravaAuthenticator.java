@@ -13,7 +13,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.agorava.LinkedIn;
@@ -27,16 +26,12 @@ import org.picketlink.authentication.event.PreLoggedOutEvent;
 import org.picketlink.credential.DefaultLoginCredentials;
 import org.picketlink.idm.credential.Credentials.Status;
 
-@ApplicationScoped
 @PicketLink
+@ApplicationScoped
 public class AgoravaAuthenticator extends BaseAuthenticator {
 
 	@Inject
 	DefaultLoginCredentials credentials;
-
-	@Inject
-	@PicketLink
-	Instance<HttpServletRequest> request;
 
 	@Inject
 	@PicketLink
@@ -60,7 +55,6 @@ public class AgoravaAuthenticator extends BaseAuthenticator {
 			LinkedInAgent user = new LinkedInAgent(userProfileFull);
 			setAgent(user);
 		} else {
-
 			String authorizationUrl = service.getAuthorizationUrl();
 			try {
 				response.get().sendRedirect(authorizationUrl);

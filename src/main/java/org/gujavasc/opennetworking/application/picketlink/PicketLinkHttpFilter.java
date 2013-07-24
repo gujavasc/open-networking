@@ -20,6 +20,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gujavasc.opennetworking.infrastructure.producer.HttpProducer;
+
 /**
  * This filter allows injection of {@link HttpServletRequest} and {@link HttpServletResponse} objects
  * 

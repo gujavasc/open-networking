@@ -46,6 +46,7 @@ public class OAuthCallbackServlet extends HttpServlet {
 		String verifier = req.getParameter(service.getVerifierParamName());
 		service.setVerifier(verifier);
 		service.initAccessToken();
+		
 		AuthenticationResult result = identity.login();
 		if (result == AuthenticationResult.FAILED) {
 			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
