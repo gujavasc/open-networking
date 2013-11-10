@@ -5,14 +5,14 @@ import java.util.List;
 
 public interface Repository<TYPE, KEY extends Serializable> {
 
-	public abstract TYPE findById(KEY id);
+    TYPE findById(KEY id);
 
-	public abstract void update(TYPE entity);
+    void update(TYPE entity);
 
-	public abstract void persist(TYPE entity);
+    void persist(TYPE entity);
 
-	public abstract void remove(TYPE entity);
+    void remove(TYPE entity);
 
-	public abstract List<TYPE> findAll();
+    List<TYPE> findAll();
 
 }
